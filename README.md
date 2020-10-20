@@ -21,7 +21,7 @@ Add it in your root build.gradle at the end of repositories: "# ApiCall"
   
   
   	dependencies {
-	        implementation 'com.github.developerakshaym021:API-Call-Master:fdb12e8fa3'
+	        implementation 'com.github.developerakshaym021:API-Call-Master:1.0.1'
 	}
   
   
@@ -31,7 +31,7 @@ Add it in your root build.gradle at the end of repositories: "# ApiCall"
 Step 3. How use "# ApiCall"
 
 
-             new ApiCallBuilder().build(this)
+          ApiCallBuilder.build(this)
             .isShowProgressBar(true)
             .setParam(getParam())
             .setUrl("url")
@@ -39,15 +39,16 @@ Step 3. How use "# ApiCall"
             .execute(new ApiCallBuilder.onResponse() {
                 @Override
                 public void Success(String response) {
-		}
+
+                }
+
                 @Override
                 public void Failed(String error) {
 
                 }
             });
-	    
-	    
-	    private HashMap<String, String> getParam(){
+		
+	private HashMap<String, String> getParam() {
     HashMap<String,String>param=new HashMap<>();
     return param;
     }
