@@ -1,0 +1,3 @@
+include ':am_apicall'
+include ':app'
+rootProject.name = "Am-API Call-Master"
