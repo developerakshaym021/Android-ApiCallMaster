@@ -58,4 +58,4 @@ Step 3. How use "# ApiCall"
 
 
 
-[![](https://jitpack.io/v/developerakshaym021/API-Call-Master.svg)](https://jitpack.io/#developerakshaym021/API-Call-Master)
+[![](https://jitpack.io/v/developerakshaym021/Android-ApiCallMaster.svg)](https://jitpack.io/#developerakshaym021/Android-ApiCallMaster)
