@@ -51,6 +51,10 @@ Step 3. How use "# ApiCall"
     HashMap<String,String>param=new HashMap<>();
     return param;
     }
+    
+    
+    
+    mvn deploy -Dregistry=https://maven.pkg.github.com/developerakshaym021 -Dtoken=GH_TOKEN
 
 
 
