@@ -57,7 +57,7 @@ public class ApiCallBuilder {
     public ApiCallBuilder isShowProgressBar(boolean b){
         if (b&&mContext!=null){
            progress=new ProgressDialogBuilder(mContext)
-                    .setProgressStyle(ProgressStyle.STYLE_3);
+                    .setProgressStyle(ProgressStyle.STYLE_1);
         }
         return this;
     }
@@ -147,8 +147,14 @@ public class ApiCallBuilder {
                 callback.Failed("Unexpected value: " + method);
                 throw new IllegalStateException("Unexpected value: " + method);
         }
-
-        OkHttpClient client = new OkHttpClient();
+        
+  OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(10000, TimeUnit.SECONDS)
+                .callTimeout(5, TimeUnit.SECONDS)
+                .writeTimeout(5, TimeUnit.SECONDS)
+                .readTimeout(5, TimeUnit.SECONDS)
+                .retryOnConnectionFailure(true)
+                .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, final IOException e) {
