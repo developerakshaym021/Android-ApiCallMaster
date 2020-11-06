@@ -24,7 +24,7 @@
         android:padding="5dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:textColor="#673AB7"/>
+        android:textColor="#FEA51D"/>
     </RelativeLayout>
 
 </RelativeLayout>
