@@ -21,7 +21,7 @@ Add it in your root build.gradle at the end of repositories: "# ApiCall"
   
   
   	dependencies {
-	        implementation 'com.github.developerakshaym021:Android-ApiCallMaster:v1.1.2'
+	        implementation 'com.github.developerakshaym021:Android-ApiCallMaster:v1.1.3'
 	}
   
   
