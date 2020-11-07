@@ -33,6 +33,8 @@ public class ApiCallBuilder {
     private String mUrl="";
     private Method method=Method.GET;
     private HttpUrl.Builder httpBuilder;
+    private String mtimout;
+
 
     public static ApiCallBuilder build(Context context){
         return new ApiCallBuilder(context);
@@ -61,7 +63,7 @@ public class ApiCallBuilder {
         this.mtimout=timout;
         try {
             new OkHttpClient.Builder()
-                    .connectTimeout(Long.parseLong(timout), TimeUnit.MILLISECONDS)
+                    .connectTimeout(Long.parseLong(timout), TimeUnit.SECONDS)
                     .callTimeout(5, TimeUnit.SECONDS)
                     .writeTimeout(5, TimeUnit.SECONDS)
                     .readTimeout(5, TimeUnit.SECONDS)
@@ -169,12 +171,12 @@ public class ApiCallBuilder {
                 callback.Failed("Unexpected value: " + method);
                 throw new IllegalStateException("Unexpected value: " + method);
         }
-     //    new OkHttpClient.Builder()
-            //    .connectTimeout(10000, TimeUnit.SECONDS)
-           //     .callTimeout(5, TimeUnit.SECONDS)
-           //     .writeTimeout(5, TimeUnit.SECONDS)
-           //     .readTimeout(5, TimeUnit.SECONDS)
-            //    .retryOnConnectionFailure(true).build();
+         new OkHttpClient.Builder()
+                .connectTimeout(100, TimeUnit.SECONDS)
+                .callTimeout(5, TimeUnit.SECONDS)
+                .writeTimeout(5, TimeUnit.SECONDS)
+                .readTimeout(5, TimeUnit.SECONDS)
+                .retryOnConnectionFailure(true).build();
         
   OkHttpClient client = new OkHttpClient();
               
