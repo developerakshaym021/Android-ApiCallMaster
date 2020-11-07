@@ -33,17 +33,16 @@ Add it in your root build.gradle at the end of repositories: "# ApiCall"
 Step 3. How use "# ApiCall"
 
 
-              ApiCallBuilder.build(this)
+                 ApiCallBuilder.build(this)
                 .isShowProgressBar(true)
-		 .setMethod(method)
-                .setUrl("BaseUrl")
-                .setParam(getParam())
-		 .setConnectionTimout(TimoutInSeconds) // Now You can also extend a connection timout time...!!
+                .setUrl("https://jsonplaceholder.typicode.com/todos/1")
+                .setParam(getParam())//https://uniquehometutors.com/tutorapp/api/get_student_banners
+                .setMethod(method)
+                .setConnectionTimout(TimoutInSeconds)
                 .execute(new ApiCallBuilder.onResponse() {
                     @Override
                     public void Success(String response) {
                         try {
-
 
                           
                         }catch (Exception e){
