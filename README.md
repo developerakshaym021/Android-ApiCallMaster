@@ -34,7 +34,7 @@ Step 3. How use "# ApiCall"
 
               ApiCallBuilder.build(this)
                 .isShowProgressBar(true)
-                .setUrl(getParam())
+                .setUrl("BaseUrl")
                 .setParam(getParam())
                 .execute(new ApiCallBuilder.onResponse() {
                     @Override
