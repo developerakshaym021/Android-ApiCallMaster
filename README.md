@@ -21,7 +21,7 @@ Add it in your root build.gradle at the end of repositories: "# ApiCall"
   
   
   	dependencies {
-	        implementation 'com.github.developerakshaym021:Android-ApiCallMaster:v1.1.1'
+	        implementation 'com.github.developerakshaym021:Android-ApiCallMaster:v1.1.2'
 	}
   
   
@@ -36,6 +36,7 @@ Step 3. How use "# ApiCall"
                 .isShowProgressBar(true)
                 .setUrl("BaseUrl")
                 .setParam(getParam())
+		.setConnectionTimout(TimoutInSeconds) // Now You can also extend a connection timout time...!!
                 .execute(new ApiCallBuilder.onResponse() {
                     @Override
                     public void Success(String response) {
