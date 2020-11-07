@@ -16,6 +16,8 @@ import www.developerakshaym.m_apicall.ApiCallBuilder;
 public class MainActivity extends AppCompatActivity {
 
     private TextView tv_result;
+    private String TimoutInSeconds="1000";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,15 +32,23 @@ public class MainActivity extends AppCompatActivity {
         return param;
     }
 
-    public void onContinue(View view) {
+  public void onContinue(View view) {
         ApiCallBuilder.build(this)
                 .isShowProgressBar(true)
-                .setUrl("https://jsonplaceholder.typicode.com/todos/1")//https://uniquehometutors.com/tutorapp/api/get_student_banners
+                .setUrl("https://jsonplaceholder.typicode.com/todos/1")
+                .setParam(getParam())//https://uniquehometutors.com/tutorapp/api/get_student_banners
+                .setConnectionTimout(TimoutInSeconds)
                 .execute(new ApiCallBuilder.onResponse() {
                     @Override
                     public void Success(String response) {
-                        Log.e("responsi",response);
-                        tv_result.setText(response);
+                        try {
+
+
+                            Log.e("responsi", response);
+                            tv_result.setText(response);
+                        }catch (Exception e){
+                            Toast.makeText(MainActivity.this, "exception: "+e, Toast.LENGTH_LONG).show();
+                        }
                     }
 
                     @Override
