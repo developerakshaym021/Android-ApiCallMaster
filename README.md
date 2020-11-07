@@ -35,10 +35,10 @@ Step 3. How use "# ApiCall"
 
               ApiCallBuilder.build(this)
                 .isShowProgressBar(true)
-		.setMethod(method)
+		 .setMethod(method)
                 .setUrl("BaseUrl")
                 .setParam(getParam())
-		.setConnectionTimout(TimoutInSeconds) // Now You can also extend a connection timout time...!!
+		 .setConnectionTimout(TimoutInSeconds) // Now You can also extend a connection timout time...!!
                 .execute(new ApiCallBuilder.onResponse() {
                     @Override
                     public void Success(String response) {
