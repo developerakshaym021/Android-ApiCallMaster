@@ -171,12 +171,12 @@ public class ApiCallBuilder {
                 callback.Failed("Unexpected value: " + method);
                 throw new IllegalStateException("Unexpected value: " + method);
         }
-         new OkHttpClient.Builder()
-                .connectTimeout(100, TimeUnit.SECONDS)
-                .callTimeout(5, TimeUnit.SECONDS)
-                .writeTimeout(5, TimeUnit.SECONDS)
-                .readTimeout(5, TimeUnit.SECONDS)
-                .retryOnConnectionFailure(true).build();
+         //new OkHttpClient.Builder()
+              //  .connectTimeout(100, TimeUnit.SECONDS)
+             //   .callTimeout(5, TimeUnit.SECONDS)
+              //  .writeTimeout(5, TimeUnit.SECONDS)
+              //  .readTimeout(5, TimeUnit.SECONDS)
+               // .retryOnConnectionFailure(true).build();
         
   OkHttpClient client = new OkHttpClient();
               
