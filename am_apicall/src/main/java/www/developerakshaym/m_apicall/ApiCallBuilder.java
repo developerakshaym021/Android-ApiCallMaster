@@ -56,15 +56,22 @@ public class ApiCallBuilder {
     }
     
     
+   
     public ApiCallBuilder setConnectionTimout(String timout){
         this.mtimout=timout;
-        new OkHttpClient.Builder()
-                .connectTimeout(Long.parseLong(timout), TimeUnit.SECONDS)
-                .callTimeout(5, TimeUnit.SECONDS)
-                .writeTimeout(5, TimeUnit.SECONDS)
-                .readTimeout(5, TimeUnit.SECONDS)
-                .retryOnConnectionFailure(false).build();
+        try {
+            new OkHttpClient.Builder()
+                    .connectTimeout(Long.parseLong(timout), TimeUnit.MILLISECONDS)
+                    .callTimeout(5, TimeUnit.SECONDS)
+                    .writeTimeout(5, TimeUnit.SECONDS)
+                    .readTimeout(5, TimeUnit.SECONDS)
+                    .retryOnConnectionFailure(false).build();
 
+
+        }catch (Exception connectionTimout){
+            Toast.makeText(mContext, "Timout: "+connectionTimout, Toast.LENGTH_SHORT).show();
+        }
+       
         return this;
 
     }
@@ -162,12 +169,12 @@ public class ApiCallBuilder {
                 callback.Failed("Unexpected value: " + method);
                 throw new IllegalStateException("Unexpected value: " + method);
         }
-         new OkHttpClient.Builder()
-                .connectTimeout(10000, TimeUnit.SECONDS)
-                .callTimeout(5, TimeUnit.SECONDS)
-                .writeTimeout(5, TimeUnit.SECONDS)
-                .readTimeout(5, TimeUnit.SECONDS)
-                .retryOnConnectionFailure(true).build();
+     //    new OkHttpClient.Builder()
+            //    .connectTimeout(10000, TimeUnit.SECONDS)
+           //     .callTimeout(5, TimeUnit.SECONDS)
+           //     .writeTimeout(5, TimeUnit.SECONDS)
+           //     .readTimeout(5, TimeUnit.SECONDS)
+            //    .retryOnConnectionFailure(true).build();
         
   OkHttpClient client = new OkHttpClient();
               
