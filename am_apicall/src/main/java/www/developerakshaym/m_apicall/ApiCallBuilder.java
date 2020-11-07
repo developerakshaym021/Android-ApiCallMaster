@@ -54,6 +54,20 @@ public class ApiCallBuilder {
         httpBuilder = HttpUrl.parse(url).newBuilder();
         return this;
     }
+    
+    
+    public ApiCallBuilder setConnectionTimout(String timout){
+        this.mtimout=timout;
+        new OkHttpClient.Builder()
+                .connectTimeout(Long.parseLong(timout), TimeUnit.SECONDS)
+                .callTimeout(5, TimeUnit.SECONDS)
+                .writeTimeout(5, TimeUnit.SECONDS)
+                .readTimeout(5, TimeUnit.SECONDS)
+                .retryOnConnectionFailure(false).build();
+
+        return this;
+
+    }
 
     public ApiCallBuilder isShowProgressBar(boolean b){
         if (b&&mContext!=null){
