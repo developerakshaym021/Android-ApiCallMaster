@@ -21,7 +21,7 @@ Add it in your root build.gradle at the end of repositories: "# ApiCall"
   
   
   	dependencies {
-	        implementation 'com.github.developerakshaym021:Android-ApiCallMaster:v1.1.1'
+	        implementation 'com.github.developerakshaym021:Android-ApiCallMaster:v1.1.2'
 	}
   
   
@@ -32,26 +32,32 @@ Add it in your root build.gradle at the end of repositories: "# ApiCall"
 Step 3. How use "# ApiCall"
 
 
-          ApiCallBuilder.build(this)
-            .isShowProgressBar(true)
-            .setParam(getParam())
-            .setUrl("url")
-            .setFile("image","file_path")
-            .execute(new ApiCallBuilder.onResponse() {
-                @Override
-                public void Success(String response) {
+              ApiCallBuilder.build(this)
+                .isShowProgressBar(true)
+                .setUrl(getParam())
+                .setParam(getParam())
+                .setConnectionTimout(TimoutInSeconds)// you can also handell a connection timeout in seconds..!!
+                .execute(new ApiCallBuilder.onResponse() {
+                    @Override
+                    public void Success(String response) {
+                        try {
 
-                }
 
-                @Override
-                public void Failed(String error) {
+                          
+                        }catch (Exception e){
+                            
+                        }
+                    }
 
-                }
-            });
+                    @Override
+                    public void Failed(String error) {
+                        
+                    }
+                });
 		
 	private HashMap<String, String> getParam() {
-    HashMap<String,String>param=new HashMap<>();
-    return param;
+          HashMap<String,String>param=new HashMap<>();
+          return param;
     }
     
     
