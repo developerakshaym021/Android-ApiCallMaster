@@ -6,22 +6,14 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.StrictMode;
 
-import com.google.gson.JsonObject;
-
-import org.apache.http.params.HttpConnectionParams;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -29,10 +21,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import okhttp3.ResponseBody;
-import okhttp3.internal.http2.Header;
 
-public class ApiCallBuilder {
+public class ApiCallBuilder_old {
     int cacheSize = 10 * 1024 * 1024;
     private static final String TAG = "ApiCallBuilder";
     private Request.Builder builder;
@@ -42,33 +32,29 @@ public class ApiCallBuilder {
     private String mUrl="";
     private Method method=Method.GET;
     private HttpUrl.Builder httpBuilder;
-    private HashMap<String, String> Headers=new HashMap<>();
-    private int timeOut=10;
 
-    public static ApiCallBuilder build(Context context){
-        return new ApiCallBuilder(context);
+    public static ApiCallBuilder_old build(Context context){
+        return new ApiCallBuilder_old(context);
     }
 
-    public ApiCallBuilder(Context mContext) {
+    public ApiCallBuilder_old(Context mContext) {
         this.mContext = mContext;
         Multipartbuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         builder=new Request.Builder();
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
     }
-    public ApiCallBuilder setMethod(Method method){
+    public ApiCallBuilder_old setMethod(Method method){
         this.method=method;
         return this;
     }
-    public ApiCallBuilder setUrl(String url){
+    public ApiCallBuilder_old setUrl(String url){
         this.mUrl=url;
         httpBuilder = HttpUrl.parse(url).newBuilder();
         return this;
     }
 
-
-
-    public ApiCallBuilder isShowProgressBar(boolean b){
+    public ApiCallBuilder_old isShowProgressBar(boolean b){
         if (b&&mContext!=null){
            progress=new ProgressDialogBuilder(mContext)
                     .setProgressStyle(ProgressStyle.STYLE_3);
@@ -76,36 +62,28 @@ public class ApiCallBuilder {
         return this;
     }
 
-    public ApiCallBuilder isShowProgressBar(boolean b, ProgressStyle style){
+    public ApiCallBuilder_old isShowProgressBar(boolean b, ProgressStyle style){
         if (b&&mContext!=null){
            progress=new ProgressDialogBuilder(mContext)
                     .setProgressStyle(style);
         }
         return this;
     }
-    public ApiCallBuilder setParam(HashMap<String,String> map){
+    public ApiCallBuilder_old setParam(HashMap<String,String> map){
         for (Map.Entry<String, String> entry : map.entrySet()) {
             switch (method){
                 case POST:
                     Multipartbuilder.addFormDataPart(entry.getKey(),entry.getValue());
-
                     break;
                 case GET:
                     httpBuilder.addQueryParameter(entry.getKey(),entry.getValue());
                     break;
-
             }
 
         }
         return this;
     }
-
-
-
-
-
-
-    public ApiCallBuilder setFilePathArray(String key, ArrayList<String> filePaths){
+    public ApiCallBuilder_old setFilePathArray(String key, ArrayList<String> filePaths){
         for (int i = 0; i < filePaths.size(); i++) {
             Uri resimUri = Uri.parse(filePaths.get(i));
             File file = new File(resimUri.getPath());
@@ -113,39 +91,31 @@ public class ApiCallBuilder {
         }
         return this;
     }
-    public ApiCallBuilder setFileUriArray(String key, ArrayList<Uri> filePaths){
+    public ApiCallBuilder_old setFileUriArray(String key, ArrayList<Uri> filePaths){
         for (int i = 0; i < filePaths.size(); i++) {
             File file = new File(filePaths.get(i).getPath());
             Multipartbuilder.addFormDataPart(key, file.getName(), RequestBody.create(MediaType.parse("multipart/form-data"), file));
         }
         return this;
     }
-    public ApiCallBuilder setFile(String key, Uri imageUri){
+    public ApiCallBuilder_old setFile(String key, Uri imageUri){
         if (imageUri!=null) {
             File file = new File(imageUri.getPath());
             Multipartbuilder.addFormDataPart(key, file.getName(), RequestBody.create(MediaType.parse("multipart/form-data"), file));
         }
         return this;
     }
-    public ApiCallBuilder setFile(String key, File file){
+    public ApiCallBuilder_old setFile(String key, File file){
         if (file.exists()) {
             Multipartbuilder.addFormDataPart(key, file.getName(), RequestBody.create(MediaType.parse("multipart/form-data"), file));
         }
         return this;
     }
-    public ApiCallBuilder setFile(String key, String path){
+    public ApiCallBuilder_old setFile(String key, String path){
         File file = new File(path);
         if (file.exists()) {
             Multipartbuilder.addFormDataPart(key, file.getName(), RequestBody.create(MediaType.parse("multipart/form-data"), file));
         }
-        return this;
-    }
-    public ApiCallBuilder setHeader(HashMap<String,String> map){
-        this.Headers=map;
-        return this;
-    }
-    public ApiCallBuilder setTimeOut(int timeOut){
-        this.timeOut=timeOut;
         return this;
     }
     public void execute(final onResponse callback) {
@@ -157,30 +127,29 @@ public class ApiCallBuilder {
             return;
         }
         if (progress!=null) progress.show();
-        Request.Builder mBuild;
+        Request request;
         switch (method){
             case GET:
-                mBuild = builder.url(httpBuilder.build());
+                builder.url(httpBuilder.build());
+                request = builder.build();
                 break;
             case POST:
                 if (Multipartbuilder.getClass().getFields().length==0){
                     Multipartbuilder.addFormDataPart("","");
                 }
                 RequestBody requestBody = Multipartbuilder.build();
-                 mBuild = new Request.Builder()
+                request = new Request.Builder()
                         .url(mUrl)
-                        .post(requestBody);
+                        .post(requestBody)
+                        .build();
                 break;
             default:
                 callback.Failed("Unexpected value: " + method);
                 throw new IllegalStateException("Unexpected value: " + method);
         }
-        for (Map.Entry<String, String> entry : Headers.entrySet()) {
-            mBuild.addHeader(entry.getKey(),entry.getValue());
-        }
+
         OkHttpClient client = new OkHttpClient();
-        client.newBuilder().connectTimeout(timeOut, TimeUnit.SECONDS).build();
-        client.newCall(mBuild.build()).enqueue(new Callback() {
+        client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, final IOException e) {
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
@@ -203,19 +172,14 @@ public class ApiCallBuilder {
                                 callback.Success(response.body().string());
                             } catch (IOException e) {
                                 e.printStackTrace();
-                                callback.Failed(e.getLocalizedMessage());
                             }
-                        }else {
-                            callback.Failed(response.message());
                         }
 
                     }
                 });
             }
         });
-
     }
-
     public interface onResponse{
         void Success(String response);
         void Failed(String error);
